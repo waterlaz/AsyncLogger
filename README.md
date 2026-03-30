@@ -10,6 +10,11 @@ A lightweight, header-only C++ class for non-blocking, asynchronous logging — 
 - **Real-time friendly** — the background thread is automatically demoted to the standard `SCHED_OTHER` scheduling policy so it does not compete with real-time threads.
 - **`std::ostream` interface** — use the familiar `<<` operator to compose and emit log lines.
 
+## Limitations
+
+- **The logger is not thread-safe for multiple producers** — only one thread should be writing to the logger at a time. If you need to log from multiple threads, consider using a mutex or other synchronization mechanism around the logger calls.
+- **Dropped messages** — if the producer thread generates log messages faster than the background thread can flush them, the ring buffer will fill up and new messages will be silently dropped. Adjust `capacity` and `flushInterval` to mitigate this.
+
 ## Requirements
 
 - C++17 (or later)
