@@ -108,7 +108,7 @@ public:
         }
         return 0;
     }
-    int isLoggerThreadRealTime() const {
+    bool isLoggerThreadRealTime() const {
         return isRealTime;
     }
 };
