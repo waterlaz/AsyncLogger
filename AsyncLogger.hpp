@@ -1,3 +1,5 @@
+/* Copyright (c) 2026 Evgeniy Vodolazskiy (waterlaz)  */
+
 #pragma once
 
 #include <thread>
