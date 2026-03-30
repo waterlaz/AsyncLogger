@@ -66,9 +66,9 @@ logger << "temperature=" << 42.5 << "\n";   // buffered, flushed on next sync
 logger << "event triggered" << std::endl;   // flushed immediately
 ```
 
-#### `int isLoggerThreadRealTime() const`
+#### `bool isLoggerThreadRealTime() const`
 
-Returns `1` if the background flush thread is still running at a real-time scheduling priority, `0` if it has been successfully demoted to `SCHED_OTHER`. Under normal operation this returns `0`.
+Returns `true` if the background flush thread is still running at a real-time scheduling priority, `false` if it has been successfully demoted to `SCHED_OTHER`. Under normal operation this returns `false`.
 
 ```cpp
 if (logger.isLoggerThreadRealTime()) {
@@ -77,19 +77,6 @@ if (logger.isLoggerThreadRealTime()) {
 ```
 
 ---
-
-### `RingBuffer<T>`
-
-A single-producer / single-consumer lock-free ring buffer that `AsyncLogger` uses internally. It is also available for direct use if you need a generic concurrent queue.
-
-```cpp
-RingBuffer<int> rb(/*capacity=*/128);
-
-rb.push(42);   // returns false if the buffer is full
-
-int value;
-rb.pop(value); // returns false if the buffer is empty
-```
 
 ## Usage Examples
 
@@ -129,7 +116,7 @@ int main() {
 ```
 
 ### Using `log()` directly
-
+It is possible to log strings directly via `log(std::string)` method
 ```cpp
 #include "AsyncLogger.hpp"
 #include <string>
